@@ -1,6 +1,17 @@
 import streamlit as st
 from datetime import date
 from functools import partial
+from streamlit_extras.let_it_rain import rain
+import time
+
+def single_task_success():
+    rain(
+        emoji="🎈",
+        font_size=54,
+        falling_speed=3,
+        animation_length=10,
+    )
+    time.sleep(2)
 
 class Task:
     def __init__(self, name, task_type='Misc'):
@@ -42,6 +53,7 @@ class Task_List:
                     if st.checkbox(task.name, value=task.done, key=f"{task_type}_{i}"):
                         if not task.done:
                             task.done = True
+                            single_task_success()
                             st.rerun()
                     else:
                         if task.done:

@@ -14,6 +14,8 @@ def daily_tasks_ui():
         st.session_state.Daily_Tasks.add(new_task)
         new_task = Task('TypingClub', 'Basic')
         st.session_state.Daily_Tasks.add(new_task)
+        new_task = Task('Document Progress and Insights', 'Basic')
+        st.session_state.Daily_Tasks.add(new_task)
 
     if st.session_state.edit_mode:
         edit_mode_ui('Daily')

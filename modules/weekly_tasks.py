@@ -1,18 +1,12 @@
 import streamlit as st
-from utils.ui_utils import display_tasks
-from modules.task_manager import TaskManager
+from utils.ui_utils import *
+from modules.task_manager import Task, Task_List
+from datetime import date
 
-task_manager = TaskManager("data/weekly_tasks.json")
+
+Weekly_Task_Types = ['Open Source Contribution(s)', 'Brainstorm New Goals', 'Reflection and Re-evaluation']
+
 
 def weekly_tasks_ui():
     # TODO; first finish daily tasks ui then adapt (inherit) from there!
-    weekly_tasks = task_manager.tasks
-
-    # Display tasks
-    display_tasks(weekly_tasks, task_manager.toggle_task)
-
-    # Add new task
-    new_task = st.text_input("Enter new weekly task")
-    if st.button("Add Weekly Task"):
-        task_manager.add_task(new_task)
-        st.experimental_rerun()
+    pass

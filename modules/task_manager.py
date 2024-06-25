@@ -1,31 +1,6 @@
 import streamlit as st
 from datetime import date
 
-
-class TaskManager:
-    def __init__(self, task_file):
-        self.task_file = task_file
-        self.tasks = self.load_tasks()
-
-    def load_tasks(self):
-        try:
-            with open(self.task_file, "r") as file:
-                return json.load(file)
-        except FileNotFoundError:
-            return []
-
-    def save_tasks(self):
-        with open(self.task_file, "w") as file:
-            json.dump(self.tasks, file)
-
-    def add_task(self, task):
-        self.tasks.append({"text": task, "completed": False})
-        self.save_tasks()
-
-    def toggle_task(self, index):
-        self.tasks[index]['completed'] = not self.tasks[index]['completed']
-        self.save_tasks()
-
 class Task:
     def __init__(self, name, task_type='Misc'):
         self.name = name
@@ -49,6 +24,11 @@ class Task_List:
         else:
             self.tasks[task.task_type].append(task)
 
+    def add_task_callback(self, task_type):
+        new_task = Task(st.session_state.new_task_input, task_type)
+        self.add(new_task)
+        st.session_state.new_task_input = ' '
+
     def delete(self, task_type, index):
         if 0 <= index < len(self.tasks[task_type]):
             del self.tasks[task_type][index]
@@ -56,6 +36,12 @@ class Task_List:
     def edit(self, task_type, index, new_name):
         if 0 <= index < len(self.tasks[task_type]):
             self.tasks[task_type][index].name = new_name
+
+    def progress(self):
+        total_tasks = sum(len(self.tasks[t]) for t in self.task_types)
+        completed_tasks = sum(task.done for t in self.task_types for task in self.tasks[t])
+        progress = completed_tasks / total_tasks if total_tasks > 0 else 0
+        return progress, completed_tasks, total_tasks
 
     def print(self, task_type):
         for i, task in enumerate(self.tasks[task_type]):

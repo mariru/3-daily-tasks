@@ -1,6 +1,10 @@
 import streamlit as st
 
 def init_session():
+
+    if 'new_task_input' not in st.session_state:
+        st.session_state.new_task_input = ''
+        
     if 'edit_mode' not in st.session_state:
         st.session_state.edit_mode = False
 
